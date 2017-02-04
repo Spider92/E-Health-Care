@@ -1,0 +1,174 @@
+﻿@model E_Health.Models.Patient.Problem
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<style type="text/css">
+    #div {
+        padding-top: 5%;
+        padding-left: 4%;
+        width: 80%;
+        position: absolute;
+        top: 3%;
+        left: 20%;
+        background: #dcd5d5;
+        bottom: 0;
+        font-family: Cambria;
+        font-size: 18px;
+        height: 150%;
+    }
+
+    #mbody {
+        background: #0C697A;
+        background-size: 100% 100%;
+        background: white;
+    }
+
+    .legends {
+        background: #223e71;
+        background-size: 100% 100%;
+        border-bottom: 0;
+        padding-left: 5%;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        font-family: Cambria;
+        font-size: 17px;
+        color: white;
+    }
+
+    #field {
+        width: 25%;
+        height: 160px;
+        background: #1f1e1e;
+        background-size: 100% 100%;
+        float: left;
+        margin: 5%;
+        margin-top: 2%;
+        margin-bottom: 4%;
+        margin-right: 4%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+
+    #content {
+        background: transparent;
+        height: 25px;
+        color: #808080;
+        font-family: Cambria;
+        border: 1px solid #808080;
+        float: right;
+        margin-right: 6%;
+        border-radius: 2px;
+    }
+</style>
+
+<body id="mbody">
+    @{Html.RenderPartial("SideView", "Doctor");}
+
+    <div id="div">
+
+        <dl>
+            <dt style="font-weight:normal;color:green"> Patient name</dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt style="font-weight:normal;color:green">Problems</dt>
+
+            <dd>
+                @Html.Raw(Model.ProblemDetail)
+            </dd>
+
+        </dl>
+        <h4 style="color:green;font-family:Cambria">Send solution for this problem</h4>
+        @using (@Html.BeginForm("Details", "Doctor", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+        {
+
+            <div>
+
+                <div>
+                    @Html.ValidationSummary(true)
+
+                    <input type="hidden" name="To" value="@Model.Email" />
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+
+                            <input type="text" name="Subject" placeholder="Subject" class="form-control">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.TextArea("Body", new { @class = "form-control", placeholder = "Details" })<p></p>
+                            <p>Send a file</p><p></p>
+                            <input type="file" name="fileUploader" class="btn btn-block" style="border:1px dotted black;border-radius:0" />
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Send solution" class="btn btn-block" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+        <div>
+
+            <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+            <script>
+
+                $(document).ready(function () {
+
+                    if ('@ViewBag.Message' == 'Sent') {
+
+                        alert('Mail has been sent successfully');
+
+                    }
+
+                });
+
+            </script>
+
+
+
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

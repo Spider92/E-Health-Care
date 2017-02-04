@@ -1,0 +1,162 @@
+﻿@model IEnumerable<E_Health.Models.Information.Health_Banner>
+@{
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="~/dist/sweetalert.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="~/dist/sweetalert.css">
+@{
+    var registration = TempData["registration"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var registration = '@registration';
+    if (registration)
+        swal('You have successfully registerd to E-Health Care System !!');
+</script>
+<html>
+<head>
+    @if(Session["PatientId"] == null)
+    {
+        <script>
+            function chat() {
+                {
+                    swal('You are not logged in ! Please login now');
+                }
+            }
+        </script>
+    }
+    else
+    {
+        <script>
+            function chat() {
+                {
+                    window.location = "@Url.Action("Select_Department", "UserChat")";
+                }
+            }
+        </script>
+    }
+     @if(Session["PatientId"] == null)
+    {
+        <script>
+            function post() {
+                {
+                    swal('You are not logged in ! Please login now ');
+                }
+            }
+        </script>
+    }
+    else
+    {
+        <script>
+            function post() {
+                {
+                    window.location = "@Url.Action("PostProblem", "Patient")";
+                }
+            }
+
+        </script>
+    }
+
+
+    <title>
+        @ViewBag.Title Online Doctor
+    </title>
+
+    <style type="text/css">
+        #btn1 {
+            height: 160px;
+            width: 160px;
+            border-radius: 50%;
+            background: url('/Photos/faq.jpg');
+            border-style: hidden;
+            background-size: 100% 100%;
+        }
+
+        .link {
+            color: white;
+            text-decoration: none;
+            font-family: Leelawadee;
+            font-size: 18px;
+        }
+
+        #btn2 {
+            height: 160px;
+            width: 160px;
+            border-radius: 50%;
+            background: url('/Photos/talk.jpg');
+            border-style: hidden;
+            background-size: 100% 100%;
+        }
+
+        #btn3 {
+            height: 160px;
+            width: 160px;
+            border-radius: 50%;
+            background: url('/Photos/firstaid.jpg');
+            border-style: hidden;
+            background-size: 100% 100%;
+        }
+
+        #mbody {
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+        #content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            background: #1f1e1e;
+            margin: 0 auto;
+            padding-left: 15%;
+        }
+
+    </style>
+</head>
+<body id="mbody">
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 10%; background: #0c697a">
+
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse" style="background-size:cover;">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Recent Outbreaks", "View_News", "Patient")</li>
+                    <li>@Html.ActionLink("Banned Medicine", "View_Medicine", "Patient")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @Html.Raw(File.ReadAllText(Server.MapPath("~/no-jquery.html")))
+    <div id="content">
+        <div style="float: left; margin:7%;margin-top:2%;">
+            <input type="button" id="btn1" onclick="post()" />
+            <h4 class="link">Post your problem</h4>
+            <p class="sub">Post your problem now and you will be answered soon through an email whenever doctor is online</p>
+        </div>
+        <div style="float: left; margin: 7%; margin-top: 2%; ">
+            <input type="button" id="btn2" onclick="chat()" />
+            <h4 class="link">Consult with doctor</h4>
+            <p class="sub">Consult with available doctor of different division and share your problem for immediate  response!</p>
+        </div>
+        <div style="float: left; margin: 7%; margin-top: 2%; ">
+            <input type="button" id="btn3" onclick='window.location="@Url.Action("GetFirstAid", "FirstAid")"' />
+            <h4 class="link"><span style="padding-right:12%"></span>Take first aid</h4>
+            <p class="sub">Are you in sudden problem? Ttake first aids of various problem at no late! </p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿
+<style type="text/css">
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        border-radius: 3px;
+        color: white;
+        font-family: Candara;
+    }
+
+    #left {
+        width: 20%;
+        padding: 2%;
+        background: #1f1e1e;
+        float: left;
+        position: fixed;
+        left: 0;
+        margin-top: 0%;
+        height: 93%;
+        border-right: 1px solid black;
+    }
+</style>
+
+<div id="left">
+    <br><br><br />
+    <input type="button" value="Manage latest news" class="btn btn-block" id="side-panel" onclick='window.location="@Url.Action("View_News","Information")"' />
+    <input type="button" value="Manage health tips" class="btn btn-block" id="side-panel" onclick='window.location="@Url.Action("View_Tips","Information")"' />
+    <input type="button" value="Manage blocked medicine" class="btn btn-block" id="side-panel" onclick='window.location="@Url.Action("View_Medicine","Information")"' />
+    <input type="button" value="Update first aids" class="btn btn-block" id="side-panel" onclick='window.location="@Url.Action("ViewFirstAids","FirstAid")"' />
+    @*<input type="button" value="Add health banner" class="btn btn-block" id="side-panel" onclick='window.location="@Url.Action("View_Banner","Information")"' />*@
+    @if (Session["AdminId"] != null)
+    {
+        <input type="button" value="Back to admin panel" class="btn btn-block" onclick='window.location="@Url.Action("Index", "Admin")"' />
+    }
+    @if (Session["DoctorId"] != null)
+    {
+        <input type="button" value="Back to doctor panel" class="btn btn-block" onclick='window.location="@Url.Action("Index", "Doctor")"' />
+    }
+</div>
+

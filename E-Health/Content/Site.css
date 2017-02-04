@@ -1,0 +1,129 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 6%;
+    padding-right: 6%;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color:red;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.text-input {
+    background-position: 5px -7px !important;
+    padding: 8px 8px 8px 25px;
+    width: 400px;
+    border: 1px solid #0875a5;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    height: 40px;
+    /*-moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;*/
+    /*box-shadow: 0 1px 1px #CCC inset, 0 1px 0 #FFF;*/
+}
+
+    .text-input:focus {
+        background-color: #FFF;
+        border-color: #007abb;
+        outline: none;
+        -moz-box-shadow: 0 0 0 1px #e8c291 inset;
+        -webkit-box-shadow: 0 0 0 1px #E8C291 inset;
+        box-shadow: 0 0 0 1px #E8C291 inset;
+    }
+
+.file {
+    width: 100%;
+    border: 1px solid #007abb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 0px 5px 0px 0px;
+}
+
+
+th {
+    background: #242424;
+    color: white;
+    font-family: Cambria;
+}
+
+
+.table tbody > tr > td {
+    padding: 15px;
+    line-height: 1.428571429;
+    vertical-align: top;
+}
+
+.table tbody {
+    border: 1px solid #242424;
+    font-family: Cambria;
+}
+
+a:link {
+    text-decoration: none;
+    font-family: Cambria;
+    font-size: 16px;
+}
+
+.sub {
+    width: 160px;
+    color:#bbb8b8;
+    float: left;
+    font-family: Andalus;
+    font-size: 15px;
+}
+
+.login-text {
+    float: right;
+    background-position: 5px -7px !important;
+    padding: 8px 8px 8px 25px;
+    width: 400px;
+    border: 1px solid #0875a5;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 1px;
+    height: 40px;
+}
+
+.mybtn {
+    float: right;
+    background: #242424;
+    color: white;
+    font-family: Cambria;
+    height: 43px;
+    width: 100%;
+    border: 1px #242424 solid;
+}

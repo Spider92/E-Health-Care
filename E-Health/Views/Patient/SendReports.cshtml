@@ -1,0 +1,27 @@
+﻿@model E_Health.Models.Information.Report
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+
+<body>
+    <div style="background: white; padding:6%;padding-top:2px; border-radius:2px">
+
+        @using (Html.BeginForm("SendReports", "Patient", FormMethod.Post, new { target = "_blank", name = "myform" }))
+        {
+            <h4 style="font-family:Cambria;color:black">Send reports photo</h4>
+            <textarea name="Image" class="ckeditor"></textarea>
+            <br />
+            <input type="submit" value="Send" id="btn" class="btn btn-block" style="background: #c6c2c2; height: 30px" />
+        }
+
+        @using (Html.BeginForm("View_Report_User", "Patient", FormMethod.Post, new { target = "_blank" }))
+        {
+            <br>
+            <input type="submit" value="Show my reports" style="background: #c6c2c2; color: black;height:30px;" class="btn btn-block" />
+        }
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+        {
+            <br>
+            <input type="submit" value="End Conversation" style="background:#9c1515;color:white" class="btn btn-block" />
+        }
+    </div>
+
+</body>

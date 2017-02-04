@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+@model IEnumerable<E_Health.Models.Information.LatestNews>
+
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<style type="text/css">
+    #div {
+        margin-top: 3%;
+        width: 80%;
+        float: right;
+    }
+
+    #mbody {
+        background: #0C697A;
+        background-size: 100% 100%;
+    }
+
+    #field {
+        border: 1px solid white;
+        border-radius: 3px;
+        padding: 3%;
+        padding-bottom: 0;
+        background: url('/images/w.jpg')no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #left {
+        width: 20%;
+        padding: 2%;
+        background: #1f1e1e;
+        float: left;
+        position: fixed;
+        left: 0;
+        margin-top: 0%;
+        height: 100%;
+        border-right: 1px solid black;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+</style>
+
+<body id="mbody">
+    @{Html.RenderPartial("SideView", "Information");}
+
+    @Html.AntiForgeryToken()
+    <div id="div">
+        <input type="button" value="Add new" onclick='window.location="@Url.Action("Add_News","Information")"' style="float:right" class="btn btn-default" />
+        <table class="table" style="border:1px solid white;width:100%;background:white">
+            <tr>
+                <th>
+                    @Html.DisplayName("Title")
+                </th>
+
+                <th>
+                    @Html.DisplayName("Details")
+                </th>
+
+                <th> </th>
+                <th> </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @Html.Raw(item.Detail)
+                    </td>
+
+
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit_News", "Information", new { id = item.NewsId }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete_News", new { id = item.NewsId },
+            new { onclick = "return confirm('Are you sure to delete this account?');" })
+                    </td>
+                </tr>
+            }
+        </table>
+
+    </div>
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+</body>
+
+

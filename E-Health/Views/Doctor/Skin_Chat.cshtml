@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "DoctorChat";
+   var message = TempData["clear_session"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message)
+        swal(message);
+</script>
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery-ui-1.9.2.min.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-1.0.1.min.js")
+    @Scripts.Render("/signalr/hubs")
+    <link href="~/Content/chat.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(function () {
+            showModalUserNickName();
+        });
+
+        function showModalUserNickName() {
+
+            startChartHub();
+
+        }
+
+        function startChartHub() {
+            var chat = $.connection.skinHub;
+
+            // Get the user name.
+            $('#nickname').val($('#nick').val());
+            chat.client.differentName = function (name) {
+                showModalUserNickName();
+                return false;
+                // Prompts for different user name
+                $('#nickname').val($('#nick').val());
+                chat.server.notify($('#nickname').val(), $.connection.hub.id);
+            };
+
+            chat.client.online = function (name) {
+                // Update list of users
+                if (name == $('#nickname').val())
+                    $('#onlineusers').append('<div class="border" style="color:green">You: ' + name + '</div>');
+                else {
+                    $('#onlineusers').append('<div class="border">' + name + '</div>');
+                    $("#users").append('<option value="' + name + '">' + name + '</option>');
+                }
+            };
+
+            chat.client.enters = function (name) {
+                $('#chatlog').append('<div style="font-style:italic;"><i>' + name + ' joins the conversation</i></div>');
+                $("#users").append('<option value="' + name + '">' + name + '</option>');
+                $('#onlineusers').append('<div class="border">' + name + '</div>');
+            };
+            // Create a function that the hub can call to broadcast chat messages.
+            chat.client.broadcastMessage = function (name, message) {
+                //Interpret smileys
+                message = message.replace(":)", "<img src=\"/images/smile.gif\" class=\"smileys\" />");
+                message = message.replace("lol", "<img src=\"/images/laugh.gif\" class=\"smileys\" />");
+                message = message.replace(":o", "<img src=\"/images/cool.gif\" class=\"smileys\" />");
+
+                //display the message
+                $('#chatlog').append('<div class="border"><span style="color:red">' + name + '</span>: ' + message + '</div>');
+            };
+
+            chat.client.disconnected = function (name) {
+                //Calls when someone leaves the page
+                $('#chatlog').append('<div style="font-style:italic;"><i>' + name + ' leaves the conversation</i></div>');
+                $('#onlineusers div').remove(":contains('" + name + "')");
+                $("#users option").remove(":contains('" + name + "')");
+            }
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                //Calls the notify method of the server
+                chat.server.notify($('#nickname').val(), $.connection.hub.id);
+
+                $('#btnsend').click(function () {
+                    if ($("#users").val() == "All") {
+                        // Call the Send method on the hub.
+                        chat.server.send($('#nickname').val(), $('#message').val());
+                    }
+                    else {
+                        chat.server.sendToSpecific($('#nickname').val(), $('#message').val(), $("#users").val());
+                    }
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+
+            });
+        }
+
+    </script>
+}
+
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<style type="text/css">
+    #div {
+        padding-top: 5%;
+        padding-left: 4%;
+        width: 80%;
+        position: absolute;
+        top: 3%;
+        left: 20%;
+        background: url('/img/p.jpg')no-repeat;
+        bottom: 0;
+        background-size: 100% 100%;
+    }
+
+    #mbody {
+        background: #0C697A;
+        background-size: 100% 100%;
+        background: white;
+    }
+
+    .legends {
+        background: #223e71;
+        background-size: 100% 100%;
+        border-bottom: 0;
+        padding-left: 5%;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        font-family: Cambria;
+        font-size: 17px;
+        color: white;
+    }
+
+    #field {
+        width: 25%;
+        height: 160px;
+        background: #1f1e1e;
+        background-size: 100% 100%;
+        float: left;
+        margin: 5%;
+        margin-top: 2%;
+        margin-bottom: 4%;
+        margin-right: 4%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+
+    #content {
+        background: transparent;
+        height: 25px;
+        color: #808080;
+        font-family: Cambria;
+        border: 1px solid #808080;
+        float: right;
+        margin-right: 6%;
+        border-radius: 2px;
+    }
+</style>
+
+<body id="mbody">
+    @{Html.RenderPartial("SideView", "Doctor");}
+
+    <div id="div">
+        <div id="container" style="float:left">
+            <input type="hidden" id="nickname" />
+            <div id="chatlog"></div>
+            <div id="onlineusers">
+            </div>
+            <div id="chatarea">
+                <div class="messagelog">
+                    <textarea spellcheck="true" id="message" class="messagebox" style="min-width:150%;height:50px;border:1px solid #007acc"></textarea>
+                </div>
+                <div class="send">
+                    <input type="submit" id="btnsend" value="Send" style="width: 100%; height: 50px; border: 1px solid #223E71; background: #223E71; " />
+                </div>
+                <div class="actionpane" hidden>
+                    <select id="users">
+                        <option value="All">All</option>
+                    </select>
+                </div>
+            </div>
+            <div id="dialog">
+                <input type="hidden" id="nick" value="@Session["DoctorName"]" />
+            </div>
+        </div>
+        <div style="background: #223E71; width:22%;padding:2%; height:100%;position:fixed;right:0;top:10%;bottom:0">
+            <div>
+                @using (@Html.BeginForm("Prescription", "Doctor", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+                {
+
+                    <div style="background: white; padding:6%; border-radius:2px">
+                        <h4 style="font-family:Cambria;color:black">Send Prescription</h4>
+                        <br>
+                        <input type="file" name="fileUploader" class="btn-block" />
+                        <input type="submit" value="Send" class=" btn btn-block" style="background: #c6c2c2; font-family: Cambria;color:black" />
+                    </div>
+
+                }
+
+            </div>
+
+
+            <div style="background: white; border-radius: 2px; padding: 6%;margin-top:10% ">
+                <h4 style="font-family:Cambria;color:black">View lab reports </h4>
+                <br>
+                @using (Html.BeginForm("ViewReports", "Doctor", FormMethod.Get, new { target = "_blank" }))
+                {
+                    <input type="submit" value="View Reports" style="background: #c6c2c2; font-family: Cambria;color:black" class="btn btn-block" />
+                }
+            </div>
+
+            <p style="padding-bottom:6em">.</p>
+            <div>
+                @using (Html.BeginForm("End_Session", "Doctor", FormMethod.Post))
+                {
+                    <br>
+                    <input type="submit" name="terminate" value="End Session" style="background:#9c1515;color:white" class="btn btn-block" />
+                }
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</body>

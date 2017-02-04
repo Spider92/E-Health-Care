@@ -1,0 +1,101 @@
+﻿@model E_Health.Models.Information.Health_Banner
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+<html>
+<head>
+    <script src="/Scripts/jquery-1.8.2.min.js"></script>
+    <title>
+        @ViewBag.Title Online Doctor
+    </title>
+
+    <style type="text/css">
+        #div {
+            margin-top: 3%;
+            width: 76%;
+            float: right;
+            position: absolute;
+            right: 10px;
+        }
+
+        #mbody {
+            background: #0C697A;
+            background-size: 100% 100%;
+        }
+
+        #field {
+            border: 1px solid white;
+            border-radius: 3px;
+            padding: 5%;
+            padding-bottom: 0;
+            background: url('/images/w.jpg')no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+        }
+
+        .left {
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        .right {
+            width: 50%;
+            float: right;
+            height: 100%;
+        }
+
+        #side-panel {
+            margin-bottom: 8%;
+            background: #0C697A;
+            color: white;
+            font-family: Candara;
+        }
+    </style>
+
+</head>
+
+<body id="mbody">
+    @{Html.RenderPartial("SideView", "Information");}
+    @using (Html.BeginForm("AddBanner", "Information", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div id="div">
+            <fieldset class="fieldset" id="field">
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Title, new { @class = "login-text", placeholder = "Banner Title" })<br>
+                            @Html.ValidationMessageFor(model => model.Title)
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <input id="Images" title="Add a banner"
+                                   type="file" name="file" class="file" style="float:right" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Add banner" class="mybtn" />
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </fieldset>
+
+        </div>
+    }
+
+
+</body>
+</html>

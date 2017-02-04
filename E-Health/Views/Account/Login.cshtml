@@ -1,0 +1,139 @@
+﻿@model E_Health.Models.Account.Login
+
+@{
+    ViewBag.Title = "Login";
+    var login = TempData["login"] ?? string.Empty;
+    var not_login = TempData["not_login"] ?? string.Empty;
+}
+<script type="text/javascript">
+    var login = '@login';
+    if (login)
+        swal('The email or password you have entered is not correct !!');
+</script>
+<script type="text/javascript">
+    var not_login = '@not_login';
+    if (not_login)
+        swal('You are not logged in.Please login now!');
+</script>
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<style type="text/css">
+    #login {
+        top: 92%;
+        padding-top: 2%;
+        margin-top: 0%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: #0c697a;
+    }
+
+    #mbody {
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        background: #161515;
+        overflow-x: hidden;
+    }
+
+    #content {
+        background: #21aa74;
+        position: absolute;
+        left: 0;
+        top: 402%;
+        right: 0;
+        width: 100%;
+        background: url('/img/slogan-f.jpg');
+        background-size: 100% 100%;
+        padding: 3%;
+    }
+
+    #down {
+        color: white;
+        font-size: 18px;
+        color: black;
+        font-family: Georgia;
+    }
+
+    #login .field-validation-error {
+        color:white;
+        float:right;
+    }
+</style>
+
+<body id="mbody">
+    @using (Html.BeginForm("Login", "Account"))
+    {
+
+        @Html.AntiForgeryToken()
+        
+        <div id="login">
+
+            <fieldset class="fieldset">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true)
+
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <br>
+                            <span style="font-size:23px;color:white;font-family:Georgia;margin-left:10%;padding-top:5%">WELCOME TO E-HEALTH CARE SYSTEM</span>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "login-text", placeholder = "EMAIL ADDRESS" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-md-10">
+                            <span style="font-size: 14px; color:#e9e4e4; font-family:Cambria;margin-left:10%">Stay in the know, and receive ongoing updates, tips from our team.</span>
+                            @Html.PasswordFor(model => model.Password, new { @class = "login-text", placeholder = "ENTER PASSWORD" })
+                            @Html.ValidationMessageFor(model => model.Password)
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="SIGN IN" class="mybtn" />
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div id="content">
+            <div style="float:left">
+                <p id="down" style="color:green">PATIENT ONLINE SERVICES LOGIN</p>
+                <p id="down" style="color:white">
+                    Have a question about your care? Need to make an <br>
+                    appointment or have one planned? Just need to see
+                    <br>your medical record?
+                    You're in the right place.
+                </p>
+            </div>
+            <p style="padding-bottom:10em"></p>
+            <div style="float:right;margin-right:2%;padding:3%">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <h4 id="down" style="color:white">
+                            New to E-Health Care?
+
+                            Sign up! It's simple.
+
+
+                        </h4>
+                        <input type="button" value="Create your account" class="mybtn" onclick='window.location="@Url.Action("Register","Account")"' />
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
+
+
+</body>
+

@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Index";
+    var message = TempData["doctor_login"] ?? string.Empty;
+
+}
+<script type="text/javascript">
+    var message = '@message';
+    if (message)
+        swal('You are not logged in ! Please login now');
+</script>
+
+<script>
+    function doctorChat() {
+        {
+            window.location = "@Url.Action("Medicine_Chat", "Doctor")";
+        }
+    }
+</script>
+
+@if ((string)@Session["Department"] == "Skin")
+{
+    <script>
+        function doctorChat()
+        {
+            window.location = "@Url.Action("Skin_Chat", "Doctor")";
+        }
+
+    </script>
+}
+
+@if ((string)@Session["Department"] == "Neurology")
+{
+    <script>
+        function doctorChat()
+        {
+            window.location = "@Url.Action("Neurology_Chat", "Doctor")";
+        }
+
+    </script>
+}
+@if ((string)@Session["Department"] == "Cardiology")
+{
+    <script>
+        function doctorChat()
+        {
+            window.location = "@Url.Action("Cardiology_Chat", "Doctor")";
+        }
+
+    </script>
+}
+
+@if ((string)@Session["Department"] == "Gynaecology")
+{
+    <script>
+        function doctorChat()
+        {
+            window.location = "@Url.Action("Gynaecology_Chat", "Doctor")";
+        }
+
+    </script>
+}
+
+
+
+
+
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<style type="text/css">
+    #div {
+        padding-top: 5%;
+        padding-left: 4%;
+        width: 80%;
+        position: absolute;
+        top: 3%;
+        left: 20%;
+        background: url('/img/slogan.jpg')no-repeat;
+        bottom: 0;
+        background-size: 100% 100%;
+    }
+
+    #mbody {
+        background: #0C697A;
+        background-size: 100% 100%;
+        background: white;
+    }
+
+    .legends {
+        background: #0C697A;
+        background-size: 100% 100%;
+        border-bottom: 0;
+        padding-left: 5%;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        font-family: Cambria;
+        font-size: 17px;
+        color: white;
+    }
+
+    #field {
+        width: 30%;
+        height: 160px;
+        float: left;
+        margin: 5%;
+        margin-bottom: 1%;
+        margin-right: 2%;
+        border-radius:3px;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+
+    #content {
+        background:#262323;
+        height: 25px;
+        color:white;
+        font-family: Cambria;
+        border: 1px solid #0C697A;
+        float: right;
+        margin-top:28%;
+        margin-right:2%;
+        border-radius: 2px;
+    }
+</style>
+
+<body id="mbody">
+    @{Html.RenderPartial("SideView", "Doctor");}
+
+    <div id="div">
+        <fieldset id="field" class="fieldset" style="background: url('/images/admission.jpg')no-repeat;background-size: 100% 100%;color:black">
+            <legend class="legends">
+                View Problems
+            </legend>
+            <input type="button" value="Answer problems" id="content" class=" btn-default" onclick='window.location="@Url.Action("ViewProblem","Doctor")"' />
+
+        </fieldset>
+
+        <fieldset id="field" class="fieldset" style="background: url('/photos/l.jpg')no-repeat;background-size: 100% 100%;">
+            <legend class="legends">
+                Talk to patient
+            </legend>
+
+            <input type="button" value="Chat with patient" id="content" onclick="doctorChat();" class="btn-default" />
+        </fieldset>
+        <fieldset id="field" class="fieldset" style="float: left; background: url('/images/b.jpg')no-repeat; background-size: 100% 100%;">
+            <legend class=" legends">
+                Update health info
+            </legend>
+            <input type="button" value="Manage info" id="content" class=" btn-default" onclick='window.location="@Url.Action("Index","Information")"' />
+        </fieldset>
+
+
+    </div>
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+
+</body>

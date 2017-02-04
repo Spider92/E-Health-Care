@@ -1,0 +1,76 @@
+﻿@model IEnumerable<E_Health.Models.Information.Blocked_Medicine>
+@{
+    ViewBag.Title = "Blocked medicines";
+}
+
+<style type="text/css">
+    #div {
+        margin-top: 3%;
+        width: 80%;
+        color: black;
+        font-family: Cambria;
+        font-size: 17px;
+        position: absolute;
+        left: 20%;
+        padding: 2%;
+    }
+
+    #mbody {
+        background-size: 100% 100%;
+    }
+
+    .content {
+        
+        background: #1f1e1e;
+        padding: 3%;
+        padding-bottom: 0;
+        position: fixed;
+        height: 100%;
+        left: 0;
+        width: 20%;
+        color: white;
+        font-family: Cambria;
+        font-size: 17px;
+        overflow-y: scroll;
+    }
+    .content a:link {
+        color:white;
+        text-decoration: none;
+        font-weight: normal;
+    }
+        .content a:visited {
+            color: white;
+            text-decoration: none;
+            font-weight: normal;
+        }
+    
+</style>
+
+<body id="mbody">
+    <div class="content">
+        @{Html.RenderAction("Blocked_medicine_partial", "Patient");}
+    </div>
+    <div id="div">
+
+        @foreach (var item in Model)
+        {
+            <fieldset class="fieldset">
+
+
+                <h4>@Html.DisplayFor(modelItem => item.Title)</h4><br>
+                @Html.Raw(item.Detail)
+
+            </fieldset>
+
+        }
+    </div>
+
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+    }
+
+</body>

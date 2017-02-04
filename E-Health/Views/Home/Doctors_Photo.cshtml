@@ -1,0 +1,21 @@
+﻿@model IEnumerable<E_Health.Models.Doctor.Doctors>
+
+
+    <table>
+        @foreach (var item in Model)
+        {
+            <tr style="float:left;margin-left:5px;margin-right:5px">
+
+                <td>
+                    <img src="~/Doctor_Photos/@item.Photo" height="110" width="150" style="border-radius:5px;" />
+                   <p style="color:white;font-family:Cambria;margin:0;padding:0"> Dr. @item.DoctorName</p>
+                    <p style="color:white;font-family:Cambria;margin:0;padding:0">@item.Division</p>
+                </td>
+
+
+            </tr>
+        }
+    </table>
+
+
+

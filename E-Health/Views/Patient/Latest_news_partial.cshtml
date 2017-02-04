@@ -1,0 +1,17 @@
+﻿@model IEnumerable<E_Health.Models.Information.LatestNews>
+
+    @foreach (var item in Model)
+    {
+        <fieldset class="fieldset">
+
+            @Html.ActionLink(@item.Title, "View_Latest_News", "Patient",new { id =item.NewsId },null)
+            
+        </fieldset>
+
+    }
+
+</div>
+
+
+
+

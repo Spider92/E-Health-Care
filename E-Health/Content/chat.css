@@ -1,0 +1,62 @@
+﻿
+#container {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #223E71;
+    border-top: 30px #223E71 solid;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+#chatlog {
+    width: 70%;
+    background-color: aliceblue;
+    border-right: 1px solid #223E71;
+    border-bottom: 1px solid #223E71;
+    float: left;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+#onlineusers {
+    float: right;
+    width: 30%;
+    height: 400px;
+    background:white;
+}
+
+#chatarea {
+    clear: both;
+    width: 400px;
+}
+
+    #chatarea .messagelog {
+        float: left;
+        height: 90%;
+        top: 10%;
+        position: relative;
+    }
+
+        #chatarea .messagelog .messagebox {
+            width: 400px;
+            height: 80%;
+        }
+
+    #chatarea .actionpane {
+        position: absolute;
+        float: left;
+        right: 38%;
+    }
+
+.smileys {
+    width: 14px;
+    height: 14px;
+}
+
+#chatarea .send {
+    position: absolute;
+    float: left;
+    width:18.4%;
+    right:38.1%;
+}

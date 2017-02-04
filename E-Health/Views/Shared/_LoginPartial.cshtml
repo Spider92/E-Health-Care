@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+<ul class="nav navbar-nav navbar-right">
+    @if (Session["AdminId"] != null)
+    {
+        <li>@Html.ActionLink("Admin Panel", "Index", "Admin")</li>
+    }
+    @if (@Session["UserId"] == null)
+    {
+        <li>@Html.ActionLink("Sign Up", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink"})</li>
+        <li>@Html.ActionLink("Sign In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("Sign Out", "Logout", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    }
+
+   
+
+</ul>

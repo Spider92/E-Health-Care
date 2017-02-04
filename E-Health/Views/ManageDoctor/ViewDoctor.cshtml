@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+@model IEnumerable<E_Health.Models.Doctor.Doctors>
+
+<script src="/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<style type="text/css">
+    #div {
+        margin-top: 3%;
+        width: 80%;
+        float: right;
+    }
+
+    #mbody {
+        background: #0C697A;
+        background-size: 100% 100%;
+    }
+
+    #field {
+        border: 1px solid white;
+        border-radius: 3px;
+        padding: 3%;
+        padding-bottom: 0;
+        background: url('/images/w.jpg')no-repeat;
+        background-size: 100% 100%;
+    }
+
+    #left {
+        width: 20%;
+        padding: 2%;
+        background: #1f1e1e;
+        float: left;
+        position: fixed;
+        left: 0;
+        margin-top: 0%;
+        height: 100%;
+        border-right: 1px solid black;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+</style>
+
+<body id="mbody">
+    @{Html.RenderPartial("AdminSideView_Doctor", "Admin");}
+    
+        @Html.AntiForgeryToken()
+        <div id="div">
+            <h4 style="color:white;font-family:Cambria;font-size:18px">List of all doctors currently added to E-health care system</h4><br />
+            <table class="table" style="border:1px solid white;width:100%;background:white">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DoctorName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Division)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Photo)
+                    </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoctorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Division)
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+
+                        <td>
+                            <img src="~/Doctor_Photos/@item.Photo" height="90" width="100" style="border-radius:3px" />
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "EditDoctor", "ManageDoctor", new { id = item.DoctorId }, null)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteDoctor", "ManageDoctor", new { id = item.DoctorId },
+            new { onclick = "return confirm('Are you sure to delete this account?');" })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+</body>
+
+

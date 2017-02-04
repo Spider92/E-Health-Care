@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "WaitinRoom";
+}
+
+<h2>WaitingRoom</h2>
+
+
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery-ui-1.9.2.min.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-1.0.1.min.js")
+    @Scripts.Render("/signalr/hubs")
+    <link href="~/Content/chat.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(function () {
+            showModalUserNickName();
+        });
+
+        function showModalUserNickName() {
+
+            startChartHub();
+
+        }
+
+        function startChartHub() {
+            var chat = $.connection.chatHub;
+
+            // Get the user name.
+            $('#nickname').val($('#nick').val());
+            chat.client.differentName = function (name) {
+                showModalUserNickName();
+                return false;
+                // Prompts for different user name
+                $('#nickname').val($('#nick').val());
+                chat.server.notify($('#nickname').val(), $.connection.hub.id);
+            };
+
+            chat.client.online = function (name) {
+                // Update list of users
+                if (name == $('#nickname').val())
+                    $('#onlineusers').append('<div class="border" style="color:green">You: ' + name + '</div>');
+                else {
+                    $('#onlineusers').append('<div class="border">' + name + '</div>');
+                    $("#users").append('<option value="' + name + '">' + name + '</option>');
+                }
+            };
+
+            chat.client.enters = function (name) {
+                $('#chatlog').append('<div style="font-style:italic;"><i>' + name + ' joins the conversation</i></div>');
+                $("#users").append('<option value="' + name + '">' + name + '</option>');
+                $('#onlineusers').append('<div class="border">' + name + '</div>');
+            };
+            // Create a function that the hub can call to broadcast chat messages.
+            chat.client.broadcastMessage = function (name, message) {
+                //Interpret smileys
+                message = message.replace(":)", "<img src=\"/images/smile.gif\" class=\"smileys\" />");
+                message = message.replace("lol", "<img src=\"/images/laugh.gif\" class=\"smileys\" />");
+                message = message.replace(":o", "<img src=\"/images/cool.gif\" class=\"smileys\" />");
+
+                //display the message
+                $('#chatlog').append('<div class="border"><span style="color:red">' + name + '</span>: ' + message + '</div>');
+            };
+
+            chat.client.disconnected = function (name) {
+                //Calls when someone leaves the page
+                $('#chatlog').append('<div style="font-style:italic;"><i>' + name + ' leaves the conversation</i></div>');
+                $('#onlineusers div').remove(":contains('" + name + "')");
+                $("#users option").remove(":contains('" + name + "')");
+            }
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                //Calls the notify method of the server
+                chat.server.notify($('#nickname').val(), $.connection.hub.id);
+
+                $('#btnsend').click(function () {
+                    if ($("#users").val() == "All") {
+                        // Call the Send method on the hub.
+                        chat.server.send($('#nickname').val(), $('#message').val());
+                    }
+                    else {
+                        chat.server.sendToSpecific($('#nickname').val(), $('#message').val(), $("#users").val());
+                    }
+                    // Clear text box and reset focus for next comment.
+                    $('#message').val('').focus();
+                });
+
+            });
+        }
+
+    </script>
+}
+
+
+
+<div id="container">
+    <input type="hidden" id="nickname" />
+    <div id="chatlog"></div>
+    <div id="onlineusers">
+    </div>
+    <div id="chatarea">
+    </div>
+    <div id="dialog">
+        <input type="hidden" id="nick" value="@Session["UserName"]"/>
+    </div>
+    @using (Html.BeginForm("User_Chat_With_Doctor", "UserChat",FormMethod.Post))
+    {
+     <input type="text" name="code" style="min-width:70%;border:1px #007acc;border-right:1px solid #007acc" placeholder="Enter code  when you  get it! " />
+    <input type="submit" value="submit" name="submit" style="min-width:30.3%;background:#007acc;height:25px;color:white;margin-left:-1%"    />
+    }
+</div>
+
+

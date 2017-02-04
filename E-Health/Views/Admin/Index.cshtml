@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+<style type="text/css">
+    .legends {
+        background: url('/photos/leg.jpg')no-repeat;
+        background-size: 100% 100%;
+        border-bottom: 0;
+        padding-left: 5%;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        font-size: 16px;
+        color: black;
+    }
+
+    #field {
+        width: 40%;
+        height: 175px;
+        background: url('/photos/banner.jpg')no-repeat;
+        background-size: 100% 100%;
+        float: left;
+        margin: 4%;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-bottom: 1px #D1A04B solid;
+    }
+
+    #div {
+        background: url('/photos/banner.jpg')no-repeat;
+        background-size: 100% 100%;
+        width: 80%;
+        float: right;
+        height: 100%;
+        padding:4%;
+        padding-top:1%;
+    }
+
+    #mbody {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: #1e1e1e;
+        background-size: 100% 100%;
+    }
+
+    #side-panel {
+        margin-bottom: 8%;
+        background: #0C697A;
+        color: white;
+        font-family: Candara;
+    }
+
+    #content {
+        background: transparent;
+        height: 30px;
+        color: black;
+        font-family: Cambria;
+        border: 1px solid black;
+        float: right;
+        margin-right: 6%;
+        border-radius: 2px;
+    }
+</style>
+<div id="mbody">
+    @{Html.RenderPartial("AdminSideView", "Admin");}
+    <div id="div">
+        <fieldset id="field" class="fieldset">
+            <legend class="legends">
+                Manage Doctor
+            </legend>
+            <h5 style="color:black;font-family:Candara;margin:5%;font-size:16px">Manages doctors by adding new doctors,updating doctors information,removing a doctor and so on</h5>
+            <input type="button" value="Go to doctor settings" id="content" class=" btn-default" onclick='window.location="@Url.Action("ViewDoctor","ManageDoctor")"' />
+
+        </fieldset>
+
+        <fieldset id="field" class="fieldset">
+            <legend class="legends">
+                Manage Users
+            </legend>
+            <h5 style="color: black; font-family: Candara; margin: 5%; font-size: 16px">Manage users by updating user information,removing a user and so on</h5>
+            <input type="button" value="Manage user settings" id="content" class="btn-default" onclick='window.location="@Url.Action("viewuser","manageuser")"' />
+        </fieldset>
+        <fieldset id="field" class="fieldset">
+            <legend class="legends">
+                Manage Information
+            </legend>
+            <h5 style="color: black; font-family: Candara; margin: 5%; font-size: 16px">Manage information by adding health tips,health banner,first aid,recent outbreaks e.t.c</h5>
+            <input type="button" value="Manage information" id="content" class=" btn-default" onclick='window.location="@Url.Action("Index","Information")"' />
+        </fieldset>
+
+        <fieldset id="field" class="fieldset">
+            <legend class="legends">
+                Manage Admins
+            </legend>
+            <h5 style="color: black; font-family: Candara; margin: 5%; font-size: 16px">Manage admins by adding by adding or removing new admin to the system </h5>
+            <input type="button" value="Control admin panel" id="content" class=" btn-default" onclick='window.location="@Url.Action("ViewAdmin", "manageadmin")"' />
+        </fieldset>
+    </div>
+
+
+
+</div>
